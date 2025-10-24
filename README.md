@@ -1,218 +1,178 @@
 # 📚 NoteSync
 
-**AI-Powered Lecture Note-Taking Application**
+> AI-Powered Lecture Note-Taking Application for Students
 
-NoteSync helps students focus on learning by automatically transcribing and summarizing lectures in real-time. Perfect for multilingual classrooms with Urdu-English code-mixing support.
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+[![Node.js](https://img.shields.io/badge/Node.js-v16+-green.svg)](https://nodejs.org/)
+[![React](https://img.shields.io/badge/React-v18-blue.svg)](https://reactjs.org/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green.svg)](https://www.mongodb.com/)
+
+NoteSync transforms your lectures into smart, organized notes using AI. Perfect for Pakistani students with support for Urdu-English code-mixing.
+
+![NoteSync Demo](https://via.placeholder.com/800x400?text=NoteSync+Demo)
 
 ## ✨ Features
 
-- 🎤 **Real-time Audio Recording** - Record lectures with pause/resume functionality
-- 🗣️ **Speech-to-Text** - Automatic transcription using Web Speech API (FREE!)
-- 🌐 **Multilingual Support** - Handles Urdu-English code-mixing seamlessly
-- 🤖 **AI Summarization** - Smart note generation using Google Gemini AI (FREE tier)
-- 📝 **Key Points Extraction** - Automatically identifies important concepts
-- 💾 **Save & Organize** - Store and manage all your lecture notes
-- 📱 **Bluetooth Mic Support** - Works with wireless microphones
-- 🎯 **Exam-Focused** - Filters out casual conversation, focuses on study material
+### 🎙️ Smart Recording
+- **Real-time Speech-to-Text** - Live transcription as you speak
+- **Multi-language Support** - English, Urdu, and code-mixing
+- **Pause & Resume** - Full control over your recording
+- **Bluetooth Mic Support** - Works with wireless microphones
 
-## 🛠️ Tech Stack
+### 🤖 AI-Powered Intelligence
+- **Smart Summarization** - AI extracts key concepts using Google Gemini
+- **Key Points Extraction** - Automatically identifies important topics
+- **Definition Detection** - Highlights key terms and definitions
+- **Exam Focus** - Filters out casual conversation, keeps study material
 
-### Frontend
+### 🏷️ Organization & Management
+- **Categories** - Organize by subject (Computer Science, Mathematics, etc.)
+- **Custom Tags** - Add your own tags for easy filtering
+- **Advanced Search** - Find lectures instantly
+- **Filter System** - Combine search, categories, and tags
+
+### 🔐 Secure Authentication
+- **User Accounts** - Secure JWT-based authentication
+- **Profile Management** - Track your university, major, and education level
+- **Private Lectures** - Only you can see your notes
+- **Data Security** - Encrypted passwords with bcrypt
+
+## 🚀 Tech Stack
+
+**Frontend:**
 - React 18
 - Tailwind CSS
-- Web Speech API (for transcription)
+- Web Speech API
 - Axios
 
-### Backend
+**Backend:**
 - Node.js + Express
-- MongoDB (with Mongoose)
-- Google Gemini AI API
-- Multer (file uploads)
+- MongoDB Atlas
+- Mongoose ODM
+- JWT Authentication
+- Bcrypt
 
-## 📋 Prerequisites
+**AI & APIs:**
+- Google Gemini 2.0 Flash
+- Web Speech API (Browser)
 
-Before you begin, ensure you have installed:
-- [Node.js](https://nodejs.org/) (v16 or higher)
-- [MongoDB](https://www.mongodb.com/try/download/community) (or use MongoDB Atlas free tier)
-- A Google Gemini API key (free - get it [here](https://makersuite.google.com/app/apikey))
+## 💻 Installation
 
-## 🚀 Installation
+### Prerequisites
+- Node.js (v16 or higher)
+- MongoDB Atlas account (free tier)
+- Google Gemini API key (free)
 
-### 1. Clone the repository
+### 1. Clone Repository
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/muhammadsudaiskhalid/NoteSync.git
 cd NoteSync
 ```
 
 ### 2. Backend Setup
-
 ```bash
-# Navigate to backend directory
 cd backend
-
-# Install dependencies
 npm install
 
 # Create .env file
 cp .env.example .env
 ```
 
-**Configure your `.env` file:**
+**Configure `.env`:**
 ```env
 PORT=5000
-MONGODB_URI=mongodb://localhost:27017/notesync
-GEMINI_API_KEY=your_gemini_api_key_here
+MONGODB_URI=your_mongodb_connection_string
+GEMINI_API_KEY=your_gemini_api_key
+JWT_SECRET=your_jwt_secret_key
 FRONTEND_URL=http://localhost:3000
 ```
 
-**Start MongoDB** (if running locally):
-```bash
-# macOS/Linux
-mongod
-
-# Windows
-net start MongoDB
-```
-
-**Start the backend server:**
-```bash
-npm run dev
-```
+**Get API Keys:**
+- MongoDB: https://www.mongodb.com/cloud/atlas
+- Gemini AI: https://makersuite.google.com/app/apikey
 
 ### 3. Frontend Setup
-
-Open a new terminal window:
-
 ```bash
-# Navigate to frontend directory
-cd frontend
-
-# Install dependencies
+cd ../frontend
 npm install
+```
 
-# Start the development server
+### 4. Run Application
+
+**Terminal 1 - Backend:**
+```bash
+cd backend
 npm start
 ```
 
-The application will open at `http://localhost:3000`
-
-## 🎯 Usage
-
-### Recording a Lecture
-
-1. **Enter Lecture Details**
-   - Add a title (e.g., "Introduction to Machine Learning")
-   - Specify the subject (e.g., "Computer Science")
-
-2. **Start Recording**
-   - Click the "Start Recording" button
-   - Allow microphone access when prompted
-   - The timer will show recording duration
-
-3. **Control Recording**
-   - Use Pause/Resume as needed
-   - Click Stop when lecture ends
-
-4. **Process Recording**
-   - Click "Transcribe Audio" to convert speech to text
-   - Click "Summarize Notes" to generate AI-powered summary
-   - Review key points, definitions, and exam topics
-
-5. **Save Your Notes**
-   - Click "Save Lecture" to store in database
-   - Access anytime from Lecture History
-
-### Viewing Past Lectures
-
-1. Switch to "Lecture History" tab
-2. Browse all saved lectures
-3. Click on any lecture to view details
-4. Delete lectures you no longer need
-
-## 🔧 Configuration
-
-### Using MongoDB Atlas (Free Cloud Database)
-
-1. Create account at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
-2. Create a free cluster
-3. Get connection string
-4. Update `MONGODB_URI` in `.env`:
-```env
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/notesync
+**Terminal 2 - Frontend:**
+```bash
+cd frontend
+npm start
 ```
 
-### Getting Google Gemini API Key (FREE)
+Open `http://localhost:3000` in your browser!
 
-1. Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
-2. Sign in with Google account
-3. Click "Create API Key"
-4. Copy and paste into `.env` file
+## 📖 Usage Guide
 
-**Free Tier Limits:**
-- 15 requests per minute
-- 1 million tokens per month
-- Perfect for student use!
+### 1. Create Account
+- Sign up with email, name, university, and field of study
+- Secure authentication with encrypted passwords
 
-## 🎤 Using Bluetooth Microphone
+### 2. Record Lecture
+- Click "Record Lecture"
+- Enter title, subject, category, and tags
+- Select language (English/Urdu/Mixed)
+- Click "Start Recording" and speak
+- Click "Stop" when done
 
-1. Pair your Bluetooth microphone with laptop
-2. Open browser settings
-3. Set Bluetooth mic as default audio input
-4. Grant microphone permissions to browser
-5. Start recording in NoteSync
+### 3. Generate Smart Notes
+- Click "Summarize" to get AI-generated notes
+- Review key points, definitions, and exam topics
+- Click "Save Lecture"
 
-## 🌐 Supported Browsers
+### 4. Access Your Notes
+- View all lectures in "Lecture History"
+- Filter by category, tags, or search
+- Expand to see full transcript
+- Copy or download notes
 
-- ✅ Google Chrome (Recommended)
-- ✅ Microsoft Edge
-- ✅ Safari (macOS)
-- ⚠️ Firefox (Limited support for Web Speech API)
+## 🎯 Perfect For
 
-## 📱 Supported Languages
+- 🎓 University students in Pakistan
+- 📚 Students with mixed-language lectures (Urdu-English)
+- 🧠 Anyone who wants to focus on learning instead of note-taking
+- 📝 Students preparing for exams
 
-- English
-- Urdu
-- English-Urdu Code-mixing (Hinglish/Urdish)
+## 🌟 Key Highlights
 
-## 🐛 Troubleshooting
+| Feature | Description |
+|---------|-------------|
+| 💯 Free | Completely free to use with free-tier APIs |
+| 🌐 Multilingual | Supports English, Urdu, and code-mixing |
+| 🤖 AI-Powered | Smart summarization with Google Gemini |
+| 🔒 Secure | JWT authentication & encrypted passwords |
+| 📱 Responsive | Works on desktop and mobile |
+| ⚡ Real-time | Live transcription as you speak |
 
-### Microphone not working
-- Check browser permissions
-- Ensure microphone is not used by another app
-- Try refreshing the page
-
-### Transcription not accurate
-- Speak clearly and at moderate pace
-- Ensure good microphone quality
-- Reduce background noise
-
-### MongoDB connection error
-- Verify MongoDB is running
-- Check connection string in `.env`
-- Ensure network connectivity for Atlas
-
-### Gemini API errors
-- Verify API key is correct
-- Check free tier limits not exceeded
-- Ensure internet connection is stable
-
-## 📂 Project Structure
-
+## 🛠️ Project Structure
 ```
 NoteSync/
-├── backend/              # Node.js backend
+├── backend/              # Node.js + Express API
 │   ├── config/          # Database configuration
 │   ├── models/          # MongoDB schemas
 │   ├── routes/          # API routes
 │   ├── controllers/     # Business logic
 │   ├── services/        # External services (Gemini AI)
+│   ├── middleware/      # Auth & error handling
 │   └── server.js        # Entry point
 │
-├── frontend/            # React frontend
+├── frontend/            # React application
 │   ├── src/
 │   │   ├── components/  # React components
-│   │   ├── services/    # API calls
-│   │   └── utils/       # Helper functions
+│   │   ├── services/    # API services
+│   │   ├── utils/       # Helper functions
+│   │   └── App.jsx      # Main component
 │   └── public/          # Static files
 │
 └── README.md
@@ -222,19 +182,28 @@ NoteSync/
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## 📄 License
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-This project is licensed under the MIT License.
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 👨‍💻 Author
 
-Created with ❤️ for students in Pakistan
+**Muhammad Sudais Khalid**
+- GitHub: [@muhammadsudaiskhalid](https://github.com/muhammadsudaiskhalid)
 
 ## 🙏 Acknowledgments
 
-- Google Gemini AI for free API
-- MongoDB Atlas for free hosting
-- React and Node.js communities
+- Google Gemini AI for free API access
+- MongoDB Atlas for free database hosting
+- Web Speech API for browser-based transcription
+- All students who inspired this project
+
 
 ## 📞 Support
 
@@ -245,5 +214,8 @@ For issues and questions:
 - LinkedIn: [Sudais Khalid - LinkedIn](https://www.linkedin.com/sudais-khalid)
 
 ---
+**Made with ❤️ for students in Pakistan**
+
+*Empowering students to learn smarter, not harder*
 
 **Happy Learning! 🎓**
