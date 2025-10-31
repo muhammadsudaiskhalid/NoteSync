@@ -34,10 +34,12 @@ function App() {
   const [isSaving, setIsSaving] = useState(false);
   const [lectures, setLectures] = useState([]);
   const [error, setError] = useState(null);
+  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
 
   // Refs
   const audioRecorderRef = useRef(null);
   const timerRef = useRef(null);
+  const dropdownRef = useRef(null);
 
   // Check authentication on mount
   useEffect(() => {
@@ -365,7 +367,7 @@ function App() {
                 <p className="text-xs">{currentUser?.university}</p>
               </div>
               <div className="text-sm text-gray-500">
-                {AudioRecorder.isSupported() ? '' : 'Use Chrome Browser'}
+              {AudioRecorder.isSupported() ? '' : 'Use Chrome Browser'}
               </div>
             </div>
           </div>
@@ -499,7 +501,7 @@ function App() {
       <footer className="bg-white border-t border-gray-200 mt-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <p className="text-center text-gray-600 text-sm">
-            Made with ❤️ for students in Pakistan | Developed by Sudais Khalid © 2025
+            Made with ❤️ for students in Pakistan | Built by Sudais Khalid © 2025
           </p>
         </div>
       </footer>

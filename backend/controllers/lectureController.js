@@ -99,14 +99,14 @@ const lectureController = {
   /**
    * @desc    Get all lectures
    * @route   GET /api/lectures
-   * @access  Public
+   * @access  Private
    */
   getAllLectures: async (req, res) => {
     try {
       const { category, tag } = req.query;
       
-      // Build filter
-      let filter = {};
+      // Build filter - only get lectures for current user
+      let filter = { user: req.user.id };
       if (category) {
         filter.category = category;
       }
@@ -118,7 +118,7 @@ const lectureController = {
         .sort({ date: -1 })
         .select('-__v');
 
-      console.log(`Retrieved ${lectures.length} lectures${category ? ` (category: ${category})` : ''}${tag ? ` (tag: ${tag})` : ''}`);
+      console.log(`Retrieved ${lectures.length} lectures for user: ${req.user.email}${category ? ` (category: ${category})` : ''}${tag ? ` (tag: ${tag})` : ''}`);
 
       res.status(200).json({
         success: true,
@@ -138,20 +138,23 @@ const lectureController = {
   /**
    * @desc    Get single lecture
    * @route   GET /api/lectures/:id
-   * @access  Public
+   * @access  Private
    */
   getLecture: async (req, res) => {
     try {
-      const lecture = await Lecture.findById(req.params.id);
+      const lecture = await Lecture.findOne({ 
+        _id: req.params.id,
+        user: req.user.id // Only get lecture if it belongs to the user
+      });
 
       if (!lecture) {
         return res.status(404).json({
           success: false,
-          error: 'Lecture not found'
+          error: 'Lecture not found or you do not have access'
         });
       }
 
-      console.log(`Retrieved lecture: ${lecture.title}`);
+      console.log(`Retrieved lecture: ${lecture.title} (User: ${req.user.email})`);
 
       res.status(200).json({
         success: true,
@@ -170,16 +173,19 @@ const lectureController = {
   /**
    * @desc    Update lecture
    * @route   PUT /api/lectures/:id
-   * @access  Public
+   * @access  Private
    */
   updateLecture: async (req, res) => {
     try {
-      let lecture = await Lecture.findById(req.params.id);
+      let lecture = await Lecture.findOne({
+        _id: req.params.id,
+        user: req.user.id // Only update if user owns the lecture
+      });
 
       if (!lecture) {
         return res.status(404).json({
           success: false,
-          error: 'Lecture not found'
+          error: 'Lecture not found or you do not have access'
         });
       }
 
@@ -192,7 +198,7 @@ const lectureController = {
         }
       );
 
-      console.log(`Updated lecture: ${lecture.title}`);
+      console.log(`Updated lecture: ${lecture.title} (User: ${req.user.email})`);
 
       res.status(200).json({
         success: true,
@@ -211,22 +217,25 @@ const lectureController = {
   /**
    * @desc    Delete lecture
    * @route   DELETE /api/lectures/:id
-   * @access  Public
+   * @access  Private
    */
   deleteLecture: async (req, res) => {
     try {
-      const lecture = await Lecture.findById(req.params.id);
+      const lecture = await Lecture.findOne({
+        _id: req.params.id,
+        user: req.user.id // Only delete if user owns the lecture
+      });
 
       if (!lecture) {
         return res.status(404).json({
           success: false,
-          error: 'Lecture not found'
+          error: 'Lecture not found or you do not have access'
         });
       }
 
       await lecture.deleteOne();
 
-      console.log(`Deleted lecture: ${lecture.title}`);
+      console.log(`Deleted lecture: ${lecture.title} (User: ${req.user.email})`);
 
       res.status(200).json({
         success: true,
@@ -246,29 +255,32 @@ const lectureController = {
   /**
    * @desc    Get all categories and tags
    * @route   GET /api/lectures/stats/categories-tags
-   * @access  Public
+   * @access  Private
    */
   getCategoriesAndTags: async (req, res) => {
     try {
-      // Get unique categories
-      const categories = await Lecture.distinct('category');
+      // Filter by current user only
+      const userFilter = { user: req.user.id };
+
+      // Get unique categories for current user
+      const categories = await Lecture.distinct('category', userFilter);
       
-      // Get all tags
-      const allTags = await Lecture.distinct('tags');
+      // Get all tags for current user
+      const allTags = await Lecture.distinct('tags', userFilter);
       
-      // Count lectures per category
+      // Count lectures per category for current user
       const categoryStats = await Promise.all(
         categories.map(async (cat) => ({
           name: cat,
-          count: await Lecture.countDocuments({ category: cat })
+          count: await Lecture.countDocuments({ ...userFilter, category: cat })
         }))
       );
 
-      // Count lectures per tag
+      // Count lectures per tag for current user
       const tagStats = await Promise.all(
         allTags.map(async (tag) => ({
           name: tag,
-          count: await Lecture.countDocuments({ tags: tag })
+          count: await Lecture.countDocuments({ ...userFilter, tags: tag })
         }))
       );
 
